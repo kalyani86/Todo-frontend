@@ -1,65 +1,22 @@
-import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import React from 'react'
+import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { UserContext } from "../Context/UserContext";
+import { Layout } from '../components/Layout';
 
-export const Login = () => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const navigate=useNavigate();
-  const {setUser}=useContext(UserContext);
-  
-  const login = async () => {
-    try {
-      console.log(email, password);
-
-      if (!email && !password) {
-        toast.error("All field required");
-        return;
-      }
-
-      if (!email) {
-        toast.err("Email required");
-        return;
-      }
-
-      if (!password) {
-        toast.error("password required");
-        return;
-      }
-
-      const res=await axios.post('http://localhost:8000/users/login',{email,password},{ withCredentials: true });
-      if(!res)
-        {
-            toast.error("user not found");
-            return;
-        }
-     // localStorage.setItem("token",res.data?.token);
-    
-      return navigate('/');
-    } catch (err) {
-      console.log(err);
-      toast.error("Invalid credentials");
-      return ;
-    }
-  };
-
+export const Edit = () => {
   return (
-    
-    <div className="flex items-center min-h-screen bg-white dark:bg-gray-900">
+    <>
+    <Layout/>
+    <div className="flex items-center min-h-screen bg-white dark:bg-gray-900 lg:ml-40">
       <ToastContainer/>
       <div className="container mx-auto ">
         <div className="max-w-md mx-auto my-20 py-5 shadow-2xl shadow-blue-500">
           <div className="text-center">
             <h1 className="my-3 text-3xl font-semibold text-gray-700 dark:text-gray-200">
-              Login
+              Edit Your Profile
             </h1>
-            <p className="text-gray-500 dark:text-gray-400">
-              Sign in to access your account
-            </p>
           </div>
           <div className="m-7">
             <form action="">
@@ -71,10 +28,7 @@ export const Login = () => {
                   type="email"
                   name="email"
                   id="email"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
+                  
                   placeholder="you@company.com"
                   className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
                 />
@@ -96,8 +50,7 @@ export const Login = () => {
                   name="password"
                   id="password"
                   placeholder="Your Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                 
                   className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
                 />
               </div>
@@ -105,7 +58,7 @@ export const Login = () => {
                 <Link>
                   <button
                     type="button"
-                    onClick={login}
+                   
                     className="w-full px-3 py-4 text-white bg-indigo-500 rounded-md focus:bg-indigo-600 focus:outline-none"
                   >
                     Login
@@ -134,5 +87,6 @@ export const Login = () => {
        
       </div>
     </div>
-  );
-};
+    </>
+  )
+}
